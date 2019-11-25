@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-// import axios from "axios";
 
 import Layout from "../components/MainLayout";
 import Table from "../components/Table";
 import Autocomplete from "../components/Autocomplete";
 import { daysDifference } from "../shared/utils";
-// import { NASA_URL } from "../shared/constants";
 
 import '../App.css';
 
@@ -51,29 +49,6 @@ class Main extends Component {
       : this.setState({ disabled: true });
   }
 
-  // fetchAPI() {
-  //   const start = this.state.startDate;
-  //   const end = this.state.endDate;
-  //   let asteroidsArray = [];
-
-  //   axios
-  //     .get(NASA_URL(start, end))
-  //     .then(res => {
-  //       const asteroids = res.data;
-  //       this.setState({ asteroids })
-
-  //       for (const date in this.state.asteroids.near_earth_objects) {
-  //         this.state.asteroids.near_earth_objects[date].map(singleAsteroid => {
-  //             if (singleAsteroid.is_potentially_hazardous_asteroid === true) {
-  //               return asteroidsArray.push(singleAsteroid)
-  //             }
-  //           }
-  //         );
-  //       }
-  //       this.setState({ filteredAsteroids: asteroidsArray });
-  //     });
-  // }
-
   // Date input
   handleDate(e, dateType) {
     if (dateType === "start") {
@@ -87,9 +62,9 @@ class Main extends Component {
     }
   }
   
+  // Update selected asteroid in table
   updateSelectedAsteroids = asteroidName => {
-    // let asteroidExists = false;
-
+  
     if (!this.state.selectedAsteroids.length) {
       this.findAsteroids(asteroidName);
       this.setState({ userInput: "", asteroidNames: [asteroidName] });
@@ -161,6 +136,5 @@ class Main extends Component {
     );
   }
 }
-
 
 export default Main;

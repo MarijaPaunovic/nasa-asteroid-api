@@ -2,28 +2,25 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// import { AppConsumer } from "../components/AppProvider";
-
 import '../App.css';
 
 class RenderAsteroids extends Component {
   constructor(props) {
     super(props);
-  
-  this.state = {
-    asteroids: [],
-    asteroidURLs: [],
-    approachDataArr: [],
-    sortedArr: [],
 
-  };
+    this.state = {
+      asteroids: [],
+      asteroidURLs: [],
+      approachDataArr: [],
+      sortedArr: []
+    };
 
   }
 
   componentDidMount() {
     this.setState(
       {
-        asteroids: this.props.context.selectedAsteroids
+        asteroids: this.props.selectedAsteroids
       },
       () => {
         this.getUrlsFromContext(this.state.asteroids);
@@ -67,27 +64,27 @@ class RenderAsteroids extends Component {
   sortIterations() {
     let filteredByDate = [];
     this.state.approachDataArr.map(asteroid => {
-			const holderObj = {name: asteroid.name, iterations: 0}
+      const holderObj = { name: asteroid.name, iterations: 0 }
 
       asteroid.dates.forEach(date => {
-				const currentDate = date.close_approach_date;
-				const year = currentDate.split("-");
+        const currentDate = date.close_approach_date;
+        const year = currentDate.split("-");
         if (year[0] > 1900 && year[0] <= 1999) {
-					holderObj.iterations += 1;
+          holderObj.iterations += 1;
         }
-			});
-			filteredByDate.push(holderObj);
+      });
+      filteredByDate.push(holderObj);
     });
-		
+
     function compare(a, b) {
-			if (a.iterations > b.iterations) return -1;
+      if (a.iterations > b.iterations) return -1;
       if (a.iterations < b.iterations) return 1;
       return 0;
     }
-		
+
     if (this.state.asteroids.length === this.state.approachDataArr.length) {
       this.setState({
-				sortedArr: filteredByDate.sort(compare)
+        sortedArr: filteredByDate.sort(compare)
       });
     }
   }
@@ -101,23 +98,22 @@ class RenderAsteroids extends Component {
       const asteroidName = obj.name;
       chartWidth = obj.iterations / referenceWidth;
 
-      //scaled based on 50vw
       return (
         <div key={obj.name}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "20%" }}>{asteroidName}</div>
-            <div 
+            <div
               className="iteration"
-              style={{ 
+              style={{
                 width: `${chartWidth * 50}vw`,
                 background: `${this.sortChartsByDanger(numberOfIterations)}`,
                 animationDelay: `${index * 100}ms`,
-                height: '40px',      
+                height: '40px',
                 marginBottom: '10px',
                 transformOrigin: '0 50%',
                 visibility: 'hidden'
               }}
-              >
+            >
               <span style={{ position: "absolute", top: 0, left: 0 }}>
                 {numberOfIterations}
               </span>
@@ -148,27 +144,25 @@ class RenderAsteroids extends Component {
     } else {
       return (
         <div style={{ marginTop: "20px" }}>
-          <em>Nema selektovanih asteroida.</em>
+          <em>No selected asteroids</em>
         </div>
       );
     }
   }
 }
 
-const Asteroid = props => (
-
+const Asteroid = (props) => {
+ 
+      return (
         <React.Fragment>
-
           <Link to="/">
             <button className="btn">
               Back
             </button>
           </Link>
-
-          <RenderAsteroids />
-
+          <RenderAsteroids {...props} />
         </React.Fragment>
-
-);
+       );
+  };
 
 export default Asteroid;

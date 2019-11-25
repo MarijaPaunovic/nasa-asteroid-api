@@ -1,20 +1,11 @@
 import React from 'react';
 
-const tableStyle = {
-	display: 'grid',
-	gridTemplateColumns: 'repeat(5, 1fr)',
-	gridGap: 5,
-	gridAutoRows: '50px 200px',
-	textAlign: 'center',
-	alignItems: 'center',
-	padding: '0 20px',
-};
-
 const Table = ({ filteredAsteroids }) => {
-	
+
+	// Display table
 	const displayAsteroids = () => {
 		if (filteredAsteroids.length) {
-			return filteredAsteroids.map( singleAsteroid => 
+			return filteredAsteroids.map(singleAsteroid =>
 				<div key={singleAsteroid.id} style={tableStyle}>
 					<div>{singleAsteroid.close_approach_data[0].close_approach_date}</div>
 					<div>{singleAsteroid.name}</div>
@@ -25,7 +16,7 @@ const Table = ({ filteredAsteroids }) => {
 			);
 		} else {
 			return (
-				<div style={{margin: '40px', textAlign: 'center'}}>
+				<div style={{ margin: '40px', textAlign: 'center' }}>
 					<em>No selected asteroids</em>
 				</div>
 			)
@@ -34,7 +25,7 @@ const Table = ({ filteredAsteroids }) => {
 
 	return (
 		<div>
-			<div style={{border: '1px solid grey'}}>
+			<div style={{ border: '1px solid grey' }}>
 				<div style={tableStyle}>
 					<h6>Date</h6>
 					<h6>Name</h6>
@@ -42,11 +33,21 @@ const Table = ({ filteredAsteroids }) => {
 					<h6>Min. Diameter (m)</h6>
 					<h6>Max. Diameter (m)</h6>
 				</div>
-			{displayAsteroids()}
+				{displayAsteroids()}
 			</div>
 
 		</div>
 	);
+};
+
+const tableStyle = {
+	display: 'grid',
+	gridTemplateColumns: 'repeat(5, 1fr)',
+	gridGap: 5,
+	gridAutoRows: '50px 200px',
+	textAlign: 'center',
+	alignItems: 'center',
+	padding: '0 20px',
 };
 
 export default Table;

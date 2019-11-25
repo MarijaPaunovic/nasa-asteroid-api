@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from "axios";
+
 import { NASA_URL } from "./shared/constants";
-
-import './App.css';
-
 import Header from './pages/Header';
 import Main from './pages/Main';
 import Asteroid from './pages/asteroid';
 
-// const AppContext = React.createContext();
-
-// export const AppConsumer = AppContext.Consumer;
+import './App.css';
 
 class App extends Component {
 
@@ -24,9 +20,6 @@ class App extends Component {
     userInput: "",
     filteredAsteroids: [],
     disabled: true
-    // updateSelectedAsteroids: asteroids => {
-    //   this.setState({ selectedAsteroids: asteroids });
-    // }
   };
 
   fetchAPI() {
@@ -52,32 +45,19 @@ class App extends Component {
       });
   }
 
-  getUrlsFromContext(asteroids) {
-    const urls = asteroids.map(asteroid => asteroid.links.self);
-    this.setState({ asteroidURLs: urls }, () => {
-      this.fetchAsteroidsData(this.state.asteroidURLs);
-    });
-  }
-
   render() {
 
     return (
       <Router>
-
         <Header />
-
         <Route exact path='/' render={props => (
           <React.Fragment>
             <div className="container">
             <div className="row">
-            {/* <AppContext.Provider value={{ state: this.state }}> */}
-
-              <Main
+              <Main {...props}
                 fetchAPI={this.fetchAPI}
                 getUrlsFromContext={this.getUrlsFromContext}
-                value={{ state: this.state }}
               />
-
             </div>
             </div>
           </React.Fragment>
@@ -85,19 +65,14 @@ class App extends Component {
 
         <Route path='/asteroid' render={props => (
           <React.Fragment>
-
-            <Asteroid value={{ state: this.state }}
+            <Asteroid {...props}
             fetchAPI={this.fetchAPI}
             getUrlsFromContext={this.getUrlsFromContext}
             />
-
-
           </React.Fragment>
         )} />
-
       </Router>
     );
-
   }
 }
 

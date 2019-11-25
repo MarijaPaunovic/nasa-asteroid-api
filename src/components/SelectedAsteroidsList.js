@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-// import Link from "next/link";
 import { Link } from "react-router-dom";
-import { AppConsumer } from "./AppProvider";
 
 import '../App.css';
 
 class SelectedAsteroids extends Component {
   constructor(props) {
     super(props);
-      this.context = null;
-      this.disabled = true;
-   
+
+    this.state = {
+      selectedAsteroids: [],
+      disabled: true
+    };
+
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -22,8 +23,7 @@ class SelectedAsteroids extends Component {
 
   componentDidUpdate(nextProps, nextState, snapshot) {
     if (snapshot === "new-asteroids") {
-      // this.state.updateSelectedAsteroids(this.props.selectedAsteroids);
-      this.disabled = false;
+      this.setState({ disabled: false });
     }
   }
 
@@ -31,14 +31,14 @@ class SelectedAsteroids extends Component {
     const { selectedAsteroids } = this.props;
 
     selectedAsteroids.forEach((currentAsteroid, i) => {
-      if(currentAsteroid.id === asteroid.id){
-       const newArr = selectedAsteroids.splice(i, 1);
-       this.setState({selectedAsteroids: [...newArr]});
-      } 
+      if (currentAsteroid.id === asteroid.id) {
+        const newArr = selectedAsteroids.splice(i, 1);
+        this.setState({ selectedAsteroids: [...newArr] });
+      }
     });
   }
 
-  displayAsteroids() {
+  displayAsteroids = () => {
     const { selectedAsteroids } = this.props;
 
     return selectedAsteroids.map(asteroid => (
@@ -56,27 +56,18 @@ class SelectedAsteroids extends Component {
 
   render() {
     return (
-      <AppConsumer>
-        {context => {
-          this.context = context;
-          return (
-            <div className="list-items-container">
-              <ul className="list-items-holder">
-              {this.displayAsteroids()}
-              </ul>
-              <Link to="/asteroid"
-                selectedAsteroids={this.props.selectedAsteroids}
-                context={this.context}
-              >
-
-                <button className={this.disabled ? 'btn disabled-btn' : 'btn'}>Number of passing by earth</button>
-
-              </Link>
-            </div>
-          );
-        }}
-      </AppConsumer>
-    );
+      <div className="list-items-container">
+        <ul className="list-items-holder">
+          {this.displayAsteroids()}
+        </ul>
+        <Link to="/asteroid" >
+          <button
+            className={this.disabled ? 'btn disabled-btn' : 'btn'}>
+            Number of passing by earth
+          </button>
+        </Link>
+      </div>
+    )
   }
 }
 

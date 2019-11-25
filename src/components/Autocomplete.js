@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import SelectedAsteroidsList from "./SelectedAsteroidsList";
 
 import '../App.css';
 
-class Autocomplete extends React.Component {
+class Autocomplete extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,8 +56,6 @@ class Autocomplete extends React.Component {
   };
 
   updateSelectedAsteroids = asteroidName => {
-    // let asteroidExists = false;
-
     if (!this.state.selectedAsteroids.length) {
       this.findAsteroids(asteroidName);
       this.setState({ userInput: "", asteroidNames: [asteroidName] });
@@ -80,7 +78,6 @@ class Autocomplete extends React.Component {
 
   findAsteroids(asteroidName) {
     const { selectedAsteroids, filteredAsteroids } = this.state;
-
     filteredAsteroids.forEach(currentAsteroid => {
       if (currentAsteroid.name === asteroidName) {
         this.setState({
@@ -106,7 +103,6 @@ class Autocomplete extends React.Component {
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
-
     if (e.keyCode === 13) {
       this.setState(
         {
