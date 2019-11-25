@@ -9,8 +9,9 @@ const Layout = (props) => {
 };
 
 const layoutStyle = {
-  margin: 20,
-  padding: 20,
+  margin: '0 auto',
+  marginTop: '20px',
+  padding: '20px',
   border: '1px solid #DDD',
 }
 
